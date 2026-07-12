@@ -1,0 +1,18 @@
+# Python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+venv/
+.venv/
+
+# Data (large raw text corpora - keep repo light, document sourcing instead)
+data/raw/*
+!data/raw/.gitkeep
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Outputs
+outputs/figures/*
+!outputs/figures/.gitkeep

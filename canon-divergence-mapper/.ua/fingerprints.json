@@ -1,0 +1,235 @@
+{
+  "version": "1.0.0",
+  "gitCommitHash": "no-git",
+  "generatedAt": "2026-07-12T17:12:55.738Z",
+  "files": {
+    "data/metadata/canon_lists.md": {
+      "filePath": "data/metadata/canon_lists.md",
+      "contentHash": "a89332683a4308b1ff5568a3e4181fd37fb7aa6a44e5d026f53b8d2ce64bc495",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 31,
+      "hasStructuralAnalysis": true
+    },
+    "docs/historical_notes.md": {
+      "filePath": "docs/historical_notes.md",
+      "contentHash": "810130245b80980d545b11f326d21a7ab57c521ccf2840b57f6d2419ab1cf8f1",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 54,
+      "hasStructuralAnalysis": true
+    },
+    "docs/proposal.md": {
+      "filePath": "docs/proposal.md",
+      "contentHash": "e88e00b824c857e5d2ed7294f8a37b88856d4fdd537ee5bb5faebd6571b6e149",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 59,
+      "hasStructuralAnalysis": true
+    },
+    "notebooks/01_canon_overlap.ipynb": {
+      "filePath": "notebooks/01_canon_overlap.ipynb",
+      "contentHash": "0b5861f4dd43ea80d767a5483e1c35b1cebfd918990d18c96590f7ebf58b3419",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 30,
+      "hasStructuralAnalysis": false
+    },
+    "notebooks/02_translation_lineage.ipynb": {
+      "filePath": "notebooks/02_translation_lineage.ipynb",
+      "contentHash": "0b5861f4dd43ea80d767a5483e1c35b1cebfd918990d18c96590f7ebf58b3419",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 30,
+      "hasStructuralAnalysis": false
+    },
+    "notebooks/03_topic_modeling.ipynb": {
+      "filePath": "notebooks/03_topic_modeling.ipynb",
+      "contentHash": "0b5861f4dd43ea80d767a5483e1c35b1cebfd918990d18c96590f7ebf58b3419",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 30,
+      "hasStructuralAnalysis": false
+    },
+    "notebooks/04_visualization.ipynb": {
+      "filePath": "notebooks/04_visualization.ipynb",
+      "contentHash": "0b5861f4dd43ea80d767a5483e1c35b1cebfd918990d18c96590f7ebf58b3419",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 30,
+      "hasStructuralAnalysis": false
+    },
+    "README.md": {
+      "filePath": "README.md",
+      "contentHash": "c45c1d987507576c88ed4bb3a1c82fe6c2873104f81bbfd1ba39b48cda9e0c0a",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 53,
+      "hasStructuralAnalysis": true
+    },
+    "requirements.txt": {
+      "filePath": "requirements.txt",
+      "contentHash": "34b80a8646e8792ec87c145aaf9c7b89e4e7cfe9258c6bb63a20be1036d59df8",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 26,
+      "hasStructuralAnalysis": false
+    },
+    "src/align_corpus.py": {
+      "filePath": "src/align_corpus.py",
+      "contentHash": "4e5eec04377fc19d9b92a79a06fc9a7ba2b1c1f59d767263a36c9c5d5b4f5779",
+      "functions": [
+        {
+          "name": "align_books",
+          "params": [
+            "protestant_books",
+            "catholic_books",
+            "orthodox_books"
+          ],
+          "returnType": "Dict[str, Dict[str, bool]]",
+          "exported": true,
+          "lineCount": 16
+        },
+        {
+          "name": "unique_to_tradition",
+          "params": [
+            "matrix",
+            "tradition"
+          ],
+          "returnType": "List[str]",
+          "exported": true,
+          "lineCount": 7
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "typing",
+          "specifiers": [
+            "Dict",
+            "List"
+          ]
+        }
+      ],
+      "exports": [
+        "align_books",
+        "unique_to_tradition"
+      ],
+      "totalLines": 40,
+      "hasStructuralAnalysis": true
+    },
+    "src/data_loader.py": {
+      "filePath": "src/data_loader.py",
+      "contentHash": "a24cb9e151fa2287ba636b011ece471f8151acf8df326902c6460d12e615a863",
+      "functions": [
+        {
+          "name": "load_canon_list",
+          "params": [
+            "tradition"
+          ],
+          "returnType": "list",
+          "exported": true,
+          "lineCount": 15
+        },
+        {
+          "name": "load_raw_text",
+          "params": [
+            "source",
+            "book"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 15
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "os",
+          "specifiers": [
+            "os"
+          ]
+        },
+        {
+          "source": "json",
+          "specifiers": [
+            "json"
+          ]
+        },
+        {
+          "source": "pathlib",
+          "specifiers": [
+            "Path"
+          ]
+        }
+      ],
+      "exports": [
+        "load_canon_list",
+        "load_raw_text"
+      ],
+      "totalLines": 53,
+      "hasStructuralAnalysis": true
+    },
+    "src/graph_builder.py": {
+      "filePath": "src/graph_builder.py",
+      "contentHash": "f04f5e523c314a8a904ae850d683575366c31177f504048e0c444562ee16edfa",
+      "functions": [
+        {
+          "name": "build_canon_overlap_graph",
+          "params": [
+            "matrix"
+          ],
+          "returnType": "nx.Graph",
+          "exported": true,
+          "lineCount": 23
+        },
+        {
+          "name": "build_translation_lineage_graph",
+          "params": [],
+          "returnType": "nx.DiGraph",
+          "exported": true,
+          "lineCount": 20
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "networkx",
+          "specifiers": [
+            "nx"
+          ]
+        },
+        {
+          "source": "typing",
+          "specifiers": [
+            "Dict"
+          ]
+        }
+      ],
+      "exports": [
+        "build_canon_overlap_graph",
+        "build_translation_lineage_graph"
+      ],
+      "totalLines": 61,
+      "hasStructuralAnalysis": true
+    }
+  }
+}

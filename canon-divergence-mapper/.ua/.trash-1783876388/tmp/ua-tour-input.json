@@ -1,0 +1,45 @@
+{
+  "nodes": [
+    {"id": "document:README.md", "name": "README.md", "filePath": "README.md", "summary": "Project overview: research question, sub-questions, directory structure, planned methodology, data sources, scope, early-scaffold status.", "type": "document"},
+    {"id": "document:docs/proposal.md", "name": "proposal.md", "filePath": "docs/proposal.md", "summary": "Thesis proposal draft: research question, sub-questions, background/motivation (the friend's saints question and 2 Maccabees), related work, data sources, methodology, expected contribution, timeline, scope guardrails.", "type": "document"},
+    {"id": "document:docs/historical_notes.md", "name": "historical_notes.md", "filePath": "docs/historical_notes.md", "summary": "Personal research-journal: entry template plus one real entry on the saints/2 Maccabees question, with an IEEE-style reference list.", "type": "document"},
+    {"id": "document:data/metadata/canon_lists.md", "name": "canon_lists.md", "filePath": "data/metadata/canon_lists.md", "summary": "Draft reference listing books in the Protestant (66), Catholic (73), and Orthodox (76-81) canons, plus key historical decision points to research.", "type": "document"},
+    {"id": "file:data/raw/.gitkeep", "name": ".gitkeep", "filePath": "data/raw/.gitkeep", "summary": "Empty placeholder keeping the empty data/raw directory tracked.", "type": "file"},
+    {"id": "file:outputs/figures/.gitkeep", "name": ".gitkeep", "filePath": "outputs/figures/.gitkeep", "summary": "Empty placeholder keeping the empty outputs/figures directory tracked.", "type": "file"},
+    {"id": "config:requirements.txt", "name": "requirements.txt", "filePath": "requirements.txt", "summary": "Python dependencies: pandas, numpy, nltk, spacy, bertopic, scikit-learn, networkx, matplotlib, plotly, jupyter.", "type": "config"},
+    {"id": "file:src/data_loader.py", "name": "data_loader.py", "filePath": "src/data_loader.py", "summary": "Utilities for loading canon book lists and raw scriptural texts; load_canon_list is unimplemented (raises NotImplementedError), load_raw_text reads from data/raw/ which is empty.", "type": "file"},
+    {"id": "file:src/align_corpus.py", "name": "align_corpus.py", "filePath": "src/align_corpus.py", "summary": "Working set-comparison logic: align_books builds a presence matrix across traditions, unique_to_tradition filters it. Not yet wired to real data.", "type": "file"},
+    {"id": "file:src/graph_builder.py", "name": "graph_builder.py", "filePath": "src/graph_builder.py", "summary": "Working NetworkX graph builders for canon overlap and translation lineage; lineage graph currently uses hardcoded placeholder edges.", "type": "file"},
+    {"id": "file:notebooks/01_canon_overlap.ipynb", "name": "01_canon_overlap.ipynb", "filePath": "notebooks/01_canon_overlap.ipynb", "summary": "Placeholder notebook for canon overlap analysis; only sets up src path import, no analysis yet.", "type": "file"},
+    {"id": "file:notebooks/02_translation_lineage.ipynb", "name": "02_translation_lineage.ipynb", "filePath": "notebooks/02_translation_lineage.ipynb", "summary": "Placeholder notebook for translation lineage; no analysis yet.", "type": "file"},
+    {"id": "file:notebooks/03_topic_modeling.ipynb", "name": "03_topic_modeling.ipynb", "filePath": "notebooks/03_topic_modeling.ipynb", "summary": "Placeholder notebook for topic modeling (deuterocanonical vs protocanonical); no analysis yet.", "type": "file"},
+    {"id": "file:notebooks/04_visualization.ipynb", "name": "04_visualization.ipynb", "filePath": "notebooks/04_visualization.ipynb", "summary": "Placeholder notebook for final visualizations; no analysis yet.", "type": "file"}
+  ],
+  "edges": [
+    {"source":"document:README.md","target":"document:docs/proposal.md","type":"documents"},
+    {"source":"document:README.md","target":"document:docs/historical_notes.md","type":"documents"},
+    {"source":"document:README.md","target":"document:data/metadata/canon_lists.md","type":"documents"},
+    {"source":"document:README.md","target":"file:src/align_corpus.py","type":"documents"},
+    {"source":"document:README.md","target":"file:src/data_loader.py","type":"documents"},
+    {"source":"document:README.md","target":"file:src/graph_builder.py","type":"documents"},
+    {"source":"document:docs/proposal.md","target":"document:data/metadata/canon_lists.md","type":"related"},
+    {"source":"document:docs/historical_notes.md","target":"document:data/metadata/canon_lists.md","type":"related"},
+    {"source":"config:requirements.txt","target":"file:src/graph_builder.py","type":"configures"},
+    {"source":"config:requirements.txt","target":"file:src/data_loader.py","type":"configures"},
+    {"source":"config:requirements.txt","target":"file:src/align_corpus.py","type":"configures"},
+    {"source":"file:notebooks/01_canon_overlap.ipynb","target":"file:src/align_corpus.py","type":"depends_on"},
+    {"source":"file:notebooks/01_canon_overlap.ipynb","target":"file:src/graph_builder.py","type":"depends_on"},
+    {"source":"file:notebooks/02_translation_lineage.ipynb","target":"file:src/data_loader.py","type":"depends_on"},
+    {"source":"file:notebooks/02_translation_lineage.ipynb","target":"file:src/graph_builder.py","type":"depends_on"},
+    {"source":"file:notebooks/03_topic_modeling.ipynb","target":"file:src/data_loader.py","type":"depends_on"},
+    {"source":"file:notebooks/04_visualization.ipynb","target":"file:src/graph_builder.py","type":"depends_on"},
+    {"source":"function:src/data_loader.py:load_canon_list","target":"document:data/metadata/canon_lists.md","type":"depends_on"}
+  ],
+  "layers": [
+    {"id": "layer:documentation", "name": "Documentation", "description": "Project overview, thesis proposal, and research-journal documents describing the project's research question and methodology."},
+    {"id": "layer:data", "name": "Data & Outputs", "description": "Raw source data placeholders, canon metadata reference lists, and generated figure output directories."},
+    {"id": "layer:config", "name": "Configuration", "description": "Project-level and tooling configuration, including Python dependencies."},
+    {"id": "layer:source-code", "name": "Source Code", "description": "Core Python modules for loading canon data, aligning corpora across traditions, and building comparison graphs."},
+    {"id": "layer:notebooks", "name": "Analysis Notebooks", "description": "Jupyter notebooks that consume the src modules to compute canon overlap, translation lineage, topic modeling, and final visualizations."}
+  ]
+}

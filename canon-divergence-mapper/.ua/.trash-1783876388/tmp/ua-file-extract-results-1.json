@@ -1,0 +1,512 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 15,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": ".ua/.understandignore",
+      "language": "unknown",
+      "fileCategory": "code",
+      "totalLines": 53,
+      "nonEmptyLines": 47,
+      "metrics": {}
+    },
+    {
+      "path": "data/metadata/canon_lists.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 30,
+      "nonEmptyLines": 24,
+      "sections": [
+        {
+          "heading": "Canon Lists by Tradition",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "Protestant Canon (66 books)",
+          "level": 2,
+          "line": 5
+        },
+        {
+          "heading": "Catholic Canon (73 books)",
+          "level": 2,
+          "line": 9
+        },
+        {
+          "heading": "Orthodox Canon (varies by jurisdiction, typically 76–81 books)",
+          "level": 2,
+          "line": 15
+        },
+        {
+          "heading": "Key Historical Decision Points (to research further in historical_notes.md)",
+          "level": 2,
+          "line": 20
+        },
+        {
+          "heading": "To Do",
+          "level": 2,
+          "line": 27
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 6
+      }
+    },
+    {
+      "path": "data/raw/.gitkeep",
+      "language": "unknown",
+      "fileCategory": "code",
+      "totalLines": 1,
+      "nonEmptyLines": 0,
+      "metrics": {}
+    },
+    {
+      "path": "docs/historical_notes.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 25,
+      "nonEmptyLines": 12,
+      "sections": [
+        {
+          "heading": "Historical Notes & Personal Research Journal",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "Format for entries",
+          "level": 2,
+          "line": 5
+        },
+        {
+          "heading": "Entries",
+          "level": 2,
+          "line": 23
+        },
+        {
+          "heading": "[Add your first entry here]",
+          "level": 3,
+          "line": 25
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 4
+      }
+    },
+    {
+      "path": "docs/proposal.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 51,
+      "nonEmptyLines": 40,
+      "sections": [
+        {
+          "heading": "Thesis Proposal Draft",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "Title",
+          "level": 2,
+          "line": 3
+        },
+        {
+          "heading": "Abstract (draft)",
+          "level": 2,
+          "line": 6
+        },
+        {
+          "heading": "1. Research Question",
+          "level": 2,
+          "line": 9
+        },
+        {
+          "heading": "2. Sub-Questions",
+          "level": 2,
+          "line": 12
+        },
+        {
+          "heading": "3. Background / Motivation",
+          "level": 2,
+          "line": 17
+        },
+        {
+          "heading": "4. Related Work",
+          "level": 2,
+          "line": 20
+        },
+        {
+          "heading": "5. Data Sources",
+          "level": 2,
+          "line": 25
+        },
+        {
+          "heading": "6. Methodology",
+          "level": 2,
+          "line": 30
+        },
+        {
+          "heading": "7. Expected Contribution",
+          "level": 2,
+          "line": 37
+        },
+        {
+          "heading": "8. Timeline (draft — adjust to your program's requirements)",
+          "level": 2,
+          "line": 40
+        },
+        {
+          "heading": "9. Scope Guardrails",
+          "level": 2,
+          "line": 49
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 12
+      }
+    },
+    {
+      "path": "notebooks/01_canon_overlap.ipynb",
+      "language": "ipynb",
+      "fileCategory": "code",
+      "totalLines": 29,
+      "nonEmptyLines": 29,
+      "metrics": {}
+    },
+    {
+      "path": "notebooks/02_translation_lineage.ipynb",
+      "language": "ipynb",
+      "fileCategory": "code",
+      "totalLines": 29,
+      "nonEmptyLines": 29,
+      "metrics": {}
+    },
+    {
+      "path": "notebooks/03_topic_modeling.ipynb",
+      "language": "ipynb",
+      "fileCategory": "code",
+      "totalLines": 29,
+      "nonEmptyLines": 29,
+      "metrics": {}
+    },
+    {
+      "path": "notebooks/04_visualization.ipynb",
+      "language": "ipynb",
+      "fileCategory": "code",
+      "totalLines": 29,
+      "nonEmptyLines": 29,
+      "metrics": {}
+    },
+    {
+      "path": "outputs/figures/.gitkeep",
+      "language": "unknown",
+      "fileCategory": "code",
+      "totalLines": 1,
+      "nonEmptyLines": 0,
+      "metrics": {}
+    },
+    {
+      "path": "README.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 52,
+      "nonEmptyLines": 35,
+      "sections": [
+        {
+          "heading": "Canon Divergence Mapper",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "Research Question",
+          "level": 2,
+          "line": 5
+        },
+        {
+          "heading": "Sub-Questions",
+          "level": 2,
+          "line": 9
+        },
+        {
+          "heading": "Project Structure",
+          "level": 2,
+          "line": 15
+        },
+        {
+          "heading": "Methodology (planned)",
+          "level": 2,
+          "line": 29
+        },
+        {
+          "heading": "Data Sources",
+          "level": 2,
+          "line": 36
+        },
+        {
+          "heading": "Scope Note",
+          "level": 2,
+          "line": 42
+        },
+        {
+          "heading": "Status",
+          "level": 2,
+          "line": 46
+        },
+        {
+          "heading": "Author's Note",
+          "level": 2,
+          "line": 50
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 9
+      }
+    },
+    {
+      "path": "requirements.txt",
+      "language": "txt",
+      "fileCategory": "docs",
+      "totalLines": 25,
+      "nonEmptyLines": 19,
+      "metrics": {}
+    },
+    {
+      "path": "src/align_corpus.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 39,
+      "nonEmptyLines": 30,
+      "functions": [
+        {
+          "name": "align_books",
+          "startLine": 11,
+          "endLine": 26,
+          "params": [
+            "protestant_books",
+            "catholic_books",
+            "orthodox_books"
+          ]
+        },
+        {
+          "name": "unique_to_tradition",
+          "startLine": 29,
+          "endLine": 35,
+          "params": [
+            "matrix",
+            "tradition"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "align_books",
+          "line": 11,
+          "isDefault": false
+        },
+        {
+          "name": "unique_to_tradition",
+          "line": 29,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "align_books",
+          "callee": "set",
+          "lineNumber": 18
+        },
+        {
+          "caller": "align_books",
+          "callee": "set",
+          "lineNumber": 18
+        },
+        {
+          "caller": "align_books",
+          "callee": "set",
+          "lineNumber": 18
+        },
+        {
+          "caller": "align_books",
+          "callee": "sorted",
+          "lineNumber": 20
+        },
+        {
+          "caller": "unique_to_tradition",
+          "callee": "matrix.items",
+          "lineNumber": 33
+        },
+        {
+          "caller": "unique_to_tradition",
+          "callee": "any",
+          "lineNumber": 34
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/data_loader.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 52,
+      "nonEmptyLines": 39,
+      "functions": [
+        {
+          "name": "load_canon_list",
+          "startLine": 17,
+          "endLine": 31,
+          "params": [
+            "tradition"
+          ]
+        },
+        {
+          "name": "load_raw_text",
+          "startLine": 34,
+          "endLine": 48,
+          "params": [
+            "source",
+            "book"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "load_canon_list",
+          "line": 17,
+          "isDefault": false
+        },
+        {
+          "name": "load_raw_text",
+          "line": 34,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "load_canon_list",
+          "callee": "NotImplementedError",
+          "lineNumber": 28
+        },
+        {
+          "caller": "load_raw_text",
+          "callee": "file_path.exists",
+          "lineNumber": 46
+        },
+        {
+          "caller": "load_raw_text",
+          "callee": "FileNotFoundError",
+          "lineNumber": 47
+        },
+        {
+          "caller": "load_raw_text",
+          "callee": "file_path.read_text",
+          "lineNumber": 48
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/graph_builder.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 60,
+      "nonEmptyLines": 46,
+      "functions": [
+        {
+          "name": "build_canon_overlap_graph",
+          "startLine": 12,
+          "endLine": 34,
+          "params": [
+            "matrix"
+          ]
+        },
+        {
+          "name": "build_translation_lineage_graph",
+          "startLine": 37,
+          "endLine": 56,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "build_canon_overlap_graph",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "build_translation_lineage_graph",
+          "line": 37,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "build_canon_overlap_graph",
+          "callee": "nx.Graph",
+          "lineNumber": 22
+        },
+        {
+          "caller": "build_canon_overlap_graph",
+          "callee": "G.add_node",
+          "lineNumber": 26
+        },
+        {
+          "caller": "build_canon_overlap_graph",
+          "callee": "matrix.items",
+          "lineNumber": 28
+        },
+        {
+          "caller": "build_canon_overlap_graph",
+          "callee": "G.add_node",
+          "lineNumber": 29
+        },
+        {
+          "caller": "build_canon_overlap_graph",
+          "callee": "G.add_edge",
+          "lineNumber": 32
+        },
+        {
+          "caller": "build_translation_lineage_graph",
+          "callee": "nx.DiGraph",
+          "lineNumber": 44
+        },
+        {
+          "caller": "build_translation_lineage_graph",
+          "callee": "G.add_edges_from",
+          "lineNumber": 55
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    }
+  ]
+}

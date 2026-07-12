@@ -1,0 +1,16 @@
+{
+  "fixedSectionOk": true,
+  "nodesRecovered": 0,
+  "edgesRestored": 0,
+  "crossBatchEdgesAdded": 0,
+  "typesRemapped": 0,
+  "complexityRemapped": 0,
+  "notes": [
+    "Single batch (batch-1.json), 21 nodes / 30 edges in, 21 nodes / 30 edges out — no drops, no node/edge count changes, so the merge script made no mechanical corrections on this run.",
+    "Merge report contains no 'Could not fix' items: no nodes missing an id, no unknown node types, no unknown complexity values, and no dropped dangling edges.",
+    "Manually verified all 21 node IDs are well-formed (correct type prefix + filePath[:name]) and all 30 edges reference existing node IDs on both source and target — no dangling references found.",
+    "All complexity values are valid (simple/moderate) — no unknown values present.",
+    "importMap has 15 entries, every one an empty dependency list (no project file imports another) — consistent with the report's 'Recovered 0 imports edges from importMap (15 entries scanned)'. No cross-batch edges were added since there is no import data to back any.",
+    "Assembled graph is functionally identical to the sole input batch file; no changes were necessary."
+  ]
+}

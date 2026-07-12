@@ -1,0 +1,696 @@
+{
+  "version": "1.0.0",
+  "project": {
+    "name": "canon-divergence-mapper",
+    "languages": [
+      "markdown",
+      "python",
+      "ipynb",
+      "txt"
+    ],
+    "frameworks": [],
+    "description": "A computational comparison of Protestant, Catholic, and Orthodox biblical canons — tracing how textual history, translation lineage, and council decisions shaped three distinct scriptural traditions.",
+    "analyzedAt": "2026-07-12T17:11:19.572Z",
+    "gitCommitHash": ""
+  },
+  "nodes": [
+    {
+      "id": "config:.ua/.understandignore",
+      "type": "config",
+      "name": ".understandignore",
+      "filePath": ".ua/.understandignore",
+      "summary": "Ignore-pattern file for the Understand-Anything analysis tool, excluding paths (e.g. data, outputs, virtualenvs) from knowledge-graph scanning.",
+      "tags": [
+        "configuration",
+        "tooling",
+        "ignore-rules"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:data/metadata/canon_lists.md",
+      "type": "document",
+      "name": "canon_lists.md",
+      "filePath": "data/metadata/canon_lists.md",
+      "summary": "Draft reference listing the books included in the Protestant (66-book), Catholic (73-book), and Orthodox (76-81 book) biblical canons, with a section for key historical decision points still to be researched.",
+      "tags": [
+        "documentation",
+        "reference-data",
+        "canon-metadata",
+        "placeholder"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:data/raw/.gitkeep",
+      "type": "file",
+      "name": ".gitkeep",
+      "filePath": "data/raw/.gitkeep",
+      "summary": "Empty placeholder file used to keep the empty data/raw directory (for original source texts) tracked in git.",
+      "tags": [
+        "placeholder",
+        "directory-marker",
+        "data"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:docs/historical_notes.md",
+      "type": "document",
+      "name": "historical_notes.md",
+      "filePath": "docs/historical_notes.md",
+      "summary": "Personal research-journal template for logging historical findings about canon formation, with an entry format and an empty entries section awaiting content.",
+      "tags": [
+        "documentation",
+        "research-journal",
+        "historical",
+        "placeholder"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:docs/proposal.md",
+      "type": "document",
+      "name": "proposal.md",
+      "filePath": "docs/proposal.md",
+      "summary": "Thesis proposal draft outlining the research question, sub-questions, background, related work, data sources, methodology, expected contribution, timeline, and scope guardrails for the canon-divergence project.",
+      "tags": [
+        "documentation",
+        "thesis-proposal",
+        "research-plan",
+        "academic"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:notebooks/01_canon_overlap.ipynb",
+      "type": "file",
+      "name": "01_canon_overlap.ipynb",
+      "filePath": "notebooks/01_canon_overlap.ipynb",
+      "summary": "Placeholder Jupyter notebook intended to compute and visualize book overlap/uniqueness across the three biblical canons; currently only sets up the src path import with no analysis implemented.",
+      "tags": [
+        "notebook",
+        "placeholder",
+        "canon-overlap",
+        "analysis"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:notebooks/02_translation_lineage.ipynb",
+      "type": "file",
+      "name": "02_translation_lineage.ipynb",
+      "filePath": "notebooks/02_translation_lineage.ipynb",
+      "summary": "Placeholder Jupyter notebook intended to trace translation lineage (Septuagint to Vulgate to modern Bibles); currently only sets up the src path import with no analysis implemented.",
+      "tags": [
+        "notebook",
+        "placeholder",
+        "translation-lineage",
+        "analysis"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:notebooks/03_topic_modeling.ipynb",
+      "type": "file",
+      "name": "03_topic_modeling.ipynb",
+      "filePath": "notebooks/03_topic_modeling.ipynb",
+      "summary": "Placeholder Jupyter notebook intended for topic modeling comparing deuterocanonical vs. protocanonical books; currently only sets up the src path import with no analysis implemented.",
+      "tags": [
+        "notebook",
+        "placeholder",
+        "topic-modeling",
+        "analysis"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:notebooks/04_visualization.ipynb",
+      "type": "file",
+      "name": "04_visualization.ipynb",
+      "filePath": "notebooks/04_visualization.ipynb",
+      "summary": "Placeholder Jupyter notebook intended for generating final visualizations of canon divergence findings; currently only sets up the src path import with no analysis implemented.",
+      "tags": [
+        "notebook",
+        "placeholder",
+        "visualization",
+        "analysis"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:outputs/figures/.gitkeep",
+      "type": "file",
+      "name": ".gitkeep",
+      "filePath": "outputs/figures/.gitkeep",
+      "summary": "Empty placeholder file used to keep the empty outputs/figures directory (for generated visualizations) tracked in git.",
+      "tags": [
+        "placeholder",
+        "directory-marker",
+        "outputs"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:README.md",
+      "type": "document",
+      "name": "README.md",
+      "filePath": "README.md",
+      "summary": "Project overview describing the Canon Divergence Mapper thesis project: its research question, sub-questions, directory structure, planned methodology, data sources, scope, and early-scaffold status.",
+      "tags": [
+        "documentation",
+        "entry-point",
+        "project-overview",
+        "thesis"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "config:requirements.txt",
+      "type": "config",
+      "name": "requirements.txt",
+      "filePath": "requirements.txt",
+      "summary": "Python dependency list for the project, covering data handling, NLP/topic modeling, and graph/visualization libraries needed for the canon-comparison pipeline.",
+      "tags": [
+        "configuration",
+        "dependencies",
+        "python",
+        "build-system"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/align_corpus.py",
+      "type": "file",
+      "name": "align_corpus.py",
+      "filePath": "src/align_corpus.py",
+      "summary": "Provides corpus-alignment logic that compares book sets across the Protestant, Catholic, and Orthodox canons to compute overlap and tradition-unique books.",
+      "tags": [
+        "utility",
+        "data-model",
+        "corpus-alignment",
+        "set-operations"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/align_corpus.py:align_books",
+      "type": "function",
+      "name": "align_books",
+      "filePath": "src/align_corpus.py",
+      "lineRange": [
+        11,
+        26
+      ],
+      "summary": "Computes a book-overlap matrix across the three canon traditions by comparing set membership of protestant, catholic, and orthodox book lists.",
+      "tags": [
+        "set-operations",
+        "corpus-alignment",
+        "data-model"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/align_corpus.py:unique_to_tradition",
+      "type": "function",
+      "name": "unique_to_tradition",
+      "filePath": "src/align_corpus.py",
+      "lineRange": [
+        29,
+        35
+      ],
+      "summary": "Filters the overlap matrix produced by align_books to return only the books unique to a specified tradition.",
+      "tags": [
+        "utility",
+        "filtering",
+        "corpus-alignment"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/data_loader.py",
+      "type": "file",
+      "name": "data_loader.py",
+      "filePath": "src/data_loader.py",
+      "summary": "Utilities for loading canon book lists and raw scriptural source texts from disk, with placeholder logic pending real API/source integration (STEP Bible, Bible Gateway, CCAT).",
+      "tags": [
+        "utility",
+        "data-loading",
+        "placeholder",
+        "io"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/data_loader.py:load_canon_list",
+      "type": "function",
+      "name": "load_canon_list",
+      "filePath": "src/data_loader.py",
+      "lineRange": [
+        17,
+        31
+      ],
+      "summary": "Intended to load the list of books for a given tradition (protestant, catholic, orthodox); currently raises NotImplementedError pending conversion of canon_lists.md into structured data.",
+      "tags": [
+        "placeholder",
+        "data-loading",
+        "not-implemented"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/data_loader.py:load_raw_text",
+      "type": "function",
+      "name": "load_raw_text",
+      "filePath": "src/data_loader.py",
+      "lineRange": [
+        34,
+        48
+      ],
+      "summary": "Loads the raw text of a given book from a given source translation off disk, raising FileNotFoundError if the expected file is missing.",
+      "tags": [
+        "io",
+        "data-loading",
+        "file-access"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/graph_builder.py",
+      "type": "file",
+      "name": "graph_builder.py",
+      "filePath": "src/graph_builder.py",
+      "summary": "Builds NetworkX graph structures representing canon book overlap and translation lineage, for downstream visualization in the notebooks.",
+      "tags": [
+        "utility",
+        "graph-construction",
+        "networkx",
+        "visualization"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Uses networkx's Graph and DiGraph to model undirected canon-overlap relationships and directed translation-lineage chains respectively."
+    },
+    {
+      "id": "function:src/graph_builder.py:build_canon_overlap_graph",
+      "type": "function",
+      "name": "build_canon_overlap_graph",
+      "filePath": "src/graph_builder.py",
+      "lineRange": [
+        12,
+        34
+      ],
+      "summary": "Constructs an undirected NetworkX graph connecting book nodes to tradition nodes based on a canon overlap matrix.",
+      "tags": [
+        "graph-construction",
+        "networkx",
+        "canon-overlap"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/graph_builder.py:build_translation_lineage_graph",
+      "type": "function",
+      "name": "build_translation_lineage_graph",
+      "filePath": "src/graph_builder.py",
+      "lineRange": [
+        37,
+        56
+      ],
+      "summary": "Constructs a directed NetworkX graph representing the translation lineage chain (e.g. Septuagint to Vulgate to modern Bibles).",
+      "tags": [
+        "graph-construction",
+        "networkx",
+        "translation-lineage"
+      ],
+      "complexity": "moderate"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:src/align_corpus.py",
+      "target": "function:src/align_corpus.py:align_books",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/align_corpus.py",
+      "target": "function:src/align_corpus.py:unique_to_tradition",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/align_corpus.py",
+      "target": "function:src/align_corpus.py:align_books",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/align_corpus.py",
+      "target": "function:src/align_corpus.py:unique_to_tradition",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/data_loader.py",
+      "target": "function:src/data_loader.py:load_canon_list",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/data_loader.py",
+      "target": "function:src/data_loader.py:load_raw_text",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/data_loader.py",
+      "target": "function:src/data_loader.py:load_canon_list",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/data_loader.py",
+      "target": "function:src/data_loader.py:load_raw_text",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/graph_builder.py",
+      "target": "function:src/graph_builder.py:build_canon_overlap_graph",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/graph_builder.py",
+      "target": "function:src/graph_builder.py:build_translation_lineage_graph",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/graph_builder.py",
+      "target": "function:src/graph_builder.py:build_canon_overlap_graph",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/graph_builder.py",
+      "target": "function:src/graph_builder.py:build_translation_lineage_graph",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "document:README.md",
+      "target": "document:docs/proposal.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "document:docs/historical_notes.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "document:data/metadata/canon_lists.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "file:src/align_corpus.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "file:src/data_loader.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "file:src/graph_builder.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/proposal.md",
+      "target": "document:data/metadata/canon_lists.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/historical_notes.md",
+      "target": "document:data/metadata/canon_lists.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "config:requirements.txt",
+      "target": "file:src/graph_builder.py",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:requirements.txt",
+      "target": "file:src/data_loader.py",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:requirements.txt",
+      "target": "file:src/align_corpus.py",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:notebooks/01_canon_overlap.ipynb",
+      "target": "file:src/align_corpus.py",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:notebooks/01_canon_overlap.ipynb",
+      "target": "file:src/graph_builder.py",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:notebooks/02_translation_lineage.ipynb",
+      "target": "file:src/data_loader.py",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:notebooks/02_translation_lineage.ipynb",
+      "target": "file:src/graph_builder.py",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:notebooks/03_topic_modeling.ipynb",
+      "target": "file:src/data_loader.py",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:notebooks/04_visualization.ipynb",
+      "target": "file:src/graph_builder.py",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "function:src/data_loader.py:load_canon_list",
+      "target": "document:data/metadata/canon_lists.md",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    }
+  ],
+  "layers": [
+    {
+      "id": "layer:source-code",
+      "name": "Source Code",
+      "description": "Core Python modules for loading canon data, aligning corpora across traditions, and building comparison graphs.",
+      "nodeIds": [
+        "file:src/align_corpus.py",
+        "file:src/data_loader.py",
+        "file:src/graph_builder.py"
+      ]
+    },
+    {
+      "id": "layer:notebooks",
+      "name": "Analysis Notebooks",
+      "description": "Jupyter notebooks that consume the src modules to compute canon overlap, translation lineage, topic modeling, and final visualizations.",
+      "nodeIds": [
+        "file:notebooks/01_canon_overlap.ipynb",
+        "file:notebooks/02_translation_lineage.ipynb",
+        "file:notebooks/03_topic_modeling.ipynb",
+        "file:notebooks/04_visualization.ipynb"
+      ]
+    },
+    {
+      "id": "layer:data",
+      "name": "Data & Outputs",
+      "description": "Raw source data placeholders, canon metadata reference lists, and generated figure output directories for the thesis analysis.",
+      "nodeIds": [
+        "document:data/metadata/canon_lists.md",
+        "file:data/raw/.gitkeep",
+        "file:outputs/figures/.gitkeep"
+      ]
+    },
+    {
+      "id": "layer:documentation",
+      "name": "Documentation",
+      "description": "Project overview, thesis proposal, and research-journal documents describing the project's research question and methodology.",
+      "nodeIds": [
+        "document:README.md",
+        "document:docs/proposal.md",
+        "document:docs/historical_notes.md"
+      ]
+    },
+    {
+      "id": "layer:config",
+      "name": "Configuration",
+      "description": "Project-level and tooling configuration, including Python dependencies and the knowledge-graph tool's ignore rules.",
+      "nodeIds": [
+        "config:requirements.txt",
+        "config:.ua/.understandignore"
+      ]
+    }
+  ],
+  "tour": [
+    {
+      "order": 1,
+      "title": "Project Overview",
+      "description": "README.md is the front door to this project: a thesis-scale research effort comparing the Protestant (66-book), Catholic (73-book), and Orthodox (76-81-book) biblical canons using computational methods. It lays out the research question, the planned directory structure (docs, data, src, notebooks, outputs), the intended methodology, and explicitly flags that this is an early-stage scaffold rather than a finished analysis. Everything else in the tour fills in one piece of the roadmap sketched here.",
+      "nodeIds": [
+        "document:README.md"
+      ]
+    },
+    {
+      "order": 2,
+      "title": "The Thesis Proposal",
+      "description": "docs/proposal.md expands the README into a full research proposal: the motivating story (a friend's question about saints and 2 Maccabees), sub-questions, related work, data sources, methodology, expected contribution, a timeline, and scope guardrails to keep the project from sprawling. This is the document that justifies why the codebase is organized the way it is -- every module you'll see later exists to answer one of the sub-questions defined here.",
+      "nodeIds": [
+        "document:docs/proposal.md"
+      ]
+    },
+    {
+      "order": 3,
+      "title": "The Research Journal",
+      "description": "historical_notes.md is a personal research-journal: a reusable entry template plus one real, worked entry investigating the saints/2 Maccabees question that sparked the whole project, backed by an IEEE-style reference list. It shows how the author is tracking the human, narrative side of the research -- historical reasoning and citations -- separately from the data and code, which is a useful pattern for any project that mixes qualitative and computational work.",
+      "nodeIds": [
+        "document:docs/historical_notes.md"
+      ]
+    },
+    {
+      "order": 4,
+      "title": "Canon Reference Data",
+      "description": "canon_lists.md is the ground-truth reference that everything downstream depends on: a draft listing of which books belong to the Protestant, Catholic, and Orthodox canons, along with the historical decision points (councils, translations, disputes) that need further research. Notice in the graph that both the proposal and the historical notes point to this file -- it is the shared vocabulary that keeps the documentation and the eventual code in sync.",
+      "nodeIds": [
+        "document:data/metadata/canon_lists.md"
+      ]
+    },
+    {
+      "order": 5,
+      "title": "Python Dependencies",
+      "description": "requirements.txt declares the computational toolkit the project intends to use: pandas and numpy for data wrangling, nltk and spacy for text processing, bertopic and scikit-learn for topic modeling, networkx for graph analysis, and matplotlib/plotly plus jupyter for visualization and exploration. This one file previews the entire analysis pipeline -- load canon data, align it, model topics, build graphs, visualize -- before you've seen a single line of the actual code.",
+      "nodeIds": [
+        "config:requirements.txt"
+      ],
+      "languageLesson": "A requirements.txt pins a Python project's dependency surface; reading it before the code is a fast way to guess the intended architecture -- here, the mix of NLP (nltk, spacy, bertopic) and graph (networkx) libraries signals a pipeline that goes from raw text to topic models to relationship graphs."
+    },
+    {
+      "order": 6,
+      "title": "Loading Canon Data",
+      "description": "src/data_loader.py is meant to be the entry point for pulling in both the canon book lists (from canon_lists.md) and raw scriptural texts (from data/raw/). Right now load_canon_list deliberately raises NotImplementedError and load_raw_text points at an empty directory -- an honest signal that this is scaffolding, not a finished pipeline. Two of the four notebooks already depend on this module, so implementing it is the clear next unlock for the whole project.",
+      "nodeIds": [
+        "file:src/data_loader.py"
+      ],
+      "languageLesson": "Raising NotImplementedError for stubbed-out functions is a common Python idiom: it lets the rest of the codebase (and the tests or notebooks that import it) take shape around a documented interface before the implementation exists, and it fails loudly rather than silently returning wrong data."
+    },
+    {
+      "order": 7,
+      "title": "Aligning Canons Across Traditions",
+      "description": "src/align_corpus.py contains the first genuinely working logic in the codebase: align_books builds a presence matrix showing which books appear in which tradition, and unique_to_tradition filters that matrix down to the books unique to one canon (like the deuterocanonical books in Catholic and Orthodox Bibles). It isn't wired to real data yet -- it depends conceptually on the data_loader module from Step 6 -- but the comparison algorithm itself is already implemented, which is the analytical heart of the project's core question.",
+      "nodeIds": [
+        "file:src/align_corpus.py"
+      ]
+    },
+    {
+      "order": 8,
+      "title": "Building Comparison Graphs",
+      "description": "src/graph_builder.py has the highest fan-in of any file in the project -- every notebook and the README all point to it -- because it turns the presence matrix from align_corpus.py into NetworkX graphs: one for canon overlap between traditions, and one for translation lineage (how texts and translations descended from one another). The lineage graph currently uses hardcoded placeholder edges, marking it as the next piece to backfill with real historical data once research from Steps 2-4 is formalized.",
+      "nodeIds": [
+        "file:src/graph_builder.py"
+      ],
+      "languageLesson": "NetworkX represents relationships as graphs of nodes and edges, which is a natural fit here: canons become nodes, shared or divergent books become edges, and standard graph algorithms (centrality, shortest path, community detection) can then be applied to questions like 'how closely related are these two canons.'"
+    },
+    {
+      "order": 9,
+      "title": "Notebook: Canon Overlap",
+      "description": "notebooks/01_canon_overlap.ipynb is the first analysis notebook, depending directly on align_corpus.py and graph_builder.py from Steps 7-8. It currently only sets up the import path to src/ -- no analysis has been written yet -- but its dependencies show it is meant to be where the presence-matrix comparison and overlap graph actually get run and visualized interactively.",
+      "nodeIds": [
+        "file:notebooks/01_canon_overlap.ipynb"
+      ],
+      "languageLesson": "Jupyter notebooks mix code, output, and narrative in one document, making them well suited to exploratory research like this: a researcher can import the src/ modules, run an analysis, and immediately see and annotate the resulting table or plot in the same place."
+    },
+    {
+      "order": 10,
+      "title": "Notebook: Translation Lineage",
+      "description": "notebooks/02_translation_lineage.ipynb depends on both data_loader.py and graph_builder.py, and is intended to explore the translation lineage graph -- tracing how different Bible translations and manuscript traditions relate to one another over time. Like the other notebooks, it is still a placeholder, but its dependency edges confirm the intended data flow: raw text and canon data in, lineage graph out.",
+      "nodeIds": [
+        "file:notebooks/02_translation_lineage.ipynb"
+      ]
+    },
+    {
+      "order": 11,
+      "title": "Notebooks: Topic Modeling and Visualization",
+      "description": "The final two notebooks close out the planned pipeline. 03_topic_modeling.ipynb depends on data_loader.py and is meant to apply the bertopic/scikit-learn tools from requirements.txt to compare topics across deuterocanonical versus protocanonical books. 04_visualization.ipynb depends on graph_builder.py and is meant to produce the final figures summarizing overlap and lineage. Both are currently empty placeholders, representing the last mile of analysis once the earlier steps in this tour are implemented.",
+      "nodeIds": [
+        "file:notebooks/03_topic_modeling.ipynb",
+        "file:notebooks/04_visualization.ipynb"
+      ]
+    },
+    {
+      "order": 12,
+      "title": "Data and Output Scaffolding",
+      "description": "data/raw/.gitkeep and outputs/figures/.gitkeep are empty placeholder files that keep otherwise-empty directories tracked in version control. They mark the two ends of the pipeline described throughout this tour: data/raw/ is where the actual scriptural texts referenced by data_loader.py (Step 6) will eventually live, and outputs/figures/ is where the plots generated by 04_visualization.ipynb (Step 11) will land. Their emptiness is a concise, honest summary of the project's current early-scaffold status.",
+      "nodeIds": [
+        "file:data/raw/.gitkeep",
+        "file:outputs/figures/.gitkeep"
+      ]
+    }
+  ]
+}

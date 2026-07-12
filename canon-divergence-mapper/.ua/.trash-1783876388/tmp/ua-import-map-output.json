@@ -1,0 +1,25 @@
+{
+  "scriptCompleted": true,
+  "stats": {
+    "filesScanned": 15,
+    "filesWithImports": 0,
+    "totalEdges": 0
+  },
+  "importMap": {
+    ".ua/.understandignore": [],
+    "data/metadata/canon_lists.md": [],
+    "data/raw/.gitkeep": [],
+    "docs/historical_notes.md": [],
+    "docs/proposal.md": [],
+    "notebooks/01_canon_overlap.ipynb": [],
+    "notebooks/02_translation_lineage.ipynb": [],
+    "notebooks/03_topic_modeling.ipynb": [],
+    "notebooks/04_visualization.ipynb": [],
+    "outputs/figures/.gitkeep": [],
+    "README.md": [],
+    "requirements.txt": [],
+    "src/align_corpus.py": [],
+    "src/data_loader.py": [],
+    "src/graph_builder.py": []
+  }
+}
