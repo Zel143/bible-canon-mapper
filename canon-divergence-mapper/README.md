@@ -45,7 +45,14 @@ This project treats canon divergence **descriptively** — documenting what happ
 
 ## Status
 
-🚧 Early scaffold — data collection and corpus alignment phase.
+🚧 Data collection and corpus alignment phase.
+
+- ✅ Canon lists structured (`data/metadata/canon_lists.json`) and loadable via `src/data_loader.load_canon_list`
+- ✅ Canon overlap pipeline implemented and verified (`notebooks/01_canon_overlap.ipynb`)
+- ✅ Translation lineage graph scaffolded (`notebooks/02_translation_lineage.ipynb`) — edges still need source verification
+- ✅ KJV (Protestant, 66 books) fetched and parsed into `data/raw/kjv/` via `src/fetch_kjv.py`
+- ⏳ Douay-Rheims and Brenton's Septuagint fetchers needed to cover Catholic/Orthodox-only books
+- ⏳ Topic modeling (`notebooks/03_topic_modeling.ipynb`) and final visualization (`notebooks/04_visualization.ipynb`) blocked on the above
 
 ## Author's Note
 

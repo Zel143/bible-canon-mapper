@@ -1,0 +1,35 @@
+{
+  "protestant": {
+    "old_testament": [
+      "Genesis", "Exodus", "Leviticus", "Numbers", "Deuteronomy",
+      "Joshua", "Judges", "Ruth", "1 Samuel", "2 Samuel",
+      "1 Kings", "2 Kings", "1 Chronicles", "2 Chronicles", "Ezra",
+      "Nehemiah", "Esther", "Job", "Psalms", "Proverbs",
+      "Ecclesiastes", "Song of Solomon", "Isaiah", "Jeremiah", "Lamentations",
+      "Ezekiel", "Daniel", "Hosea", "Joel", "Amos",
+      "Obadiah", "Jonah", "Micah", "Nahum", "Habakkuk",
+      "Zephaniah", "Haggai", "Zechariah", "Malachi"
+    ],
+    "new_testament": [
+      "Matthew", "Mark", "Luke", "John", "Acts",
+      "Romans", "1 Corinthians", "2 Corinthians", "Galatians", "Ephesians",
+      "Philippians", "Colossians", "1 Thessalonians", "2 Thessalonians", "1 Timothy",
+      "2 Timothy", "Titus", "Philemon", "Hebrews", "James",
+      "1 Peter", "2 Peter", "1 John", "2 John", "3 John",
+      "Jude", "Revelation"
+    ]
+  },
+  "catholic": {
+    "old_testament_additions": [
+      "Tobit", "Judith", "1 Maccabees", "2 Maccabees",
+      "Wisdom", "Sirach", "Baruch"
+    ],
+    "note": "Old Testament = Protestant 39 + the 7 books listed here (46 total). Also includes textual additions to Esther and Daniel (e.g. Prayer of Azariah, Susanna, Bel and the Dragon) that are not counted as separate books. New Testament is identical to the Protestant list (27 books)."
+  },
+  "orthodox": {
+    "old_testament_additions": [
+      "1 Esdras", "3 Maccabees", "Prayer of Manasseh", "Psalm 151"
+    ],
+    "note": "Old Testament = Catholic 46 + the books listed here, per the commonly cited Greek Orthodox (Rahlfs/Septuagint-based) list (50 OT books total). New Testament is identical to the Protestant/Catholic list (27 books). Jurisdiction varies: Slavonic and Georgian traditions may also include 2 Esdras (4 Ezra), 4 Maccabees (often as an appendix), and the Ethiopian Orthodox canon adds Jubilees and 1 Enoch. This list represents one common baseline, not a universal Orthodox standard — see the To Do item in canon_lists.md."
+  }
+}

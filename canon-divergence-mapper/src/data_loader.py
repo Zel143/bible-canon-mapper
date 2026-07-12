@@ -6,12 +6,14 @@ Fill in actual API/source integration as data sourcing is finalized
 (e.g., STEP Bible, Bible Gateway API, CCAT digitized texts).
 """
 
-import os
 import json
 from pathlib import Path
 
 RAW_DATA_DIR = Path(__file__).parent.parent / "data" / "raw"
 METADATA_DIR = Path(__file__).parent.parent / "data" / "metadata"
+
+
+CANON_LISTS_PATH = METADATA_DIR / "canon_lists.json"
 
 
 def load_canon_list(tradition: str) -> list:
@@ -22,13 +24,26 @@ def load_canon_list(tradition: str) -> list:
         tradition: one of "protestant", "catholic", "orthodox"
 
     Returns:
-        List of book names (str). Currently a placeholder —
-        replace with parsed data from canon_lists.csv once created.
+        List of book names (str), Old Testament followed by New Testament.
+        Catholic and Orthodox lists are built additively on top of the
+        Protestant list per data/metadata/canon_lists.json.
     """
-    raise NotImplementedError(
-        "Convert data/metadata/canon_lists.md into structured CSV/JSON, "
-        "then implement parsing here."
-    )
+    with open(CANON_LISTS_PATH, encoding="utf-8") as f:
+        canon_data = json.load(f)
+
+    if tradition not in ("protestant", "catholic", "orthodox"):
+        raise ValueError(f"Unknown tradition: {tradition!r}")
+
+    protestant_ot = canon_data["protestant"]["old_testament"]
+    new_testament = canon_data["protestant"]["new_testament"]
+
+    old_testament = list(protestant_ot)
+    if tradition in ("catholic", "orthodox"):
+        old_testament += canon_data["catholic"]["old_testament_additions"]
+    if tradition == "orthodox":
+        old_testament += canon_data["orthodox"]["old_testament_additions"]
+
+    return old_testament + new_testament
 
 
 def load_raw_text(source: str, book: str) -> str:
