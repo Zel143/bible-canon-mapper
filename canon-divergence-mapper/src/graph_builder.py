@@ -105,7 +105,7 @@ def build_translation_lineage_graph() -> nx.DiGraph:
          "named base text in the 1604 translators' instructions, rule 1 [8]"),
         ("Tyndale's Bible (NT 1526, Pentateuch 1530)", "King James Version (1611)", "1611",
          "translators instructed to prefer Tyndale's wording where it fit better; "
-         "estimated ~80% of KJV NT wording [8][9]"),
+         "Nielson & Skousen (1998) sampling estimate: ~84% of KJV NT wording [8][9]"),
         ("Geneva Bible (1560)", "King James Version (1611)", "1611",
          "translators instructed to prefer Geneva's wording where it fit better [8]"),
         ("Masoretic Text", "King James Version (1611)", "1611",
