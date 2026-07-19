@@ -5,9 +5,13 @@ __pycache__/
 venv/
 .venv/
 
-# Data (large raw text corpora - keep repo light, document sourcing instead)
+# Data (large raw/processed text corpora - keep repo light, document sourcing
+# instead; both are fully regenerable via the src/fetch_*.py and
+# src/build_processed_corpus.py scripts)
 data/raw/*
 !data/raw/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
 
 # OS
 .DS_Store

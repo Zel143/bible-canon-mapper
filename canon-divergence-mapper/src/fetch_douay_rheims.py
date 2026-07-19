@@ -121,7 +121,10 @@ GUTENBERG_TITLES = [
 def download_source_text() -> str:
     response = requests.get(GUTENBERG_URL, timeout=30)
     response.raise_for_status()
-    return response.text
+    # Gutenberg serves \r\n line endings; normalize to \n so Path.write_text's
+    # platform newline translation (on Windows: \n -> \r\n) doesn't double them
+    # into \r\r\n.
+    return response.text.replace("\r\n", "\n")
 
 
 def strip_gutenberg_boilerplate(text: str) -> str:
