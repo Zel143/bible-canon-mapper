@@ -5,7 +5,53 @@ Aligns parallel verses/books across different canon traditions
 to support comparative analysis (overlap, topic modeling, etc.).
 """
 
+import sys
+from pathlib import Path
 from typing import Dict, List
+
+sys.path.append(str(Path(__file__).parent))
+from data_loader import load_canon_list, load_raw_text  # noqa: E402
+
+# Canonical text source per tradition, picked so each tradition's shared
+# books are read from the translation closest to that tradition's own
+# textual basis, now that KJV/Douay-Rheims/Septuagint are all fetched and
+# a given book (e.g. Genesis) may exist in more than one source:
+#   - protestant: KJV — Masoretic-based OT, the only Protestant-specific
+#     source fetched.
+#   - catholic: Douay-Rheims — Vulgate-based, one consistent translation
+#     covering the full 73-book Catholic canon.
+#   - orthodox: Septuagint (Brenton) — the Old Testament, Greek-based, is
+#     the Orthodox canon's actual textual basis (Septuagint > Masoretic
+#     for this tradition specifically). Brenton's translation has no New
+#     Testament, so Orthodox NT books fall back to KJV, whose Textus
+#     Receptus is closer to the Byzantine text Orthodox churches use
+#     liturgically than the Vulgate-derived Douay-Rheims NT.
+CANONICAL_SOURCES = {
+    "protestant": "kjv",
+    "catholic": "douay_rheims",
+    "orthodox": "septuagint",
+}
+ORTHODOX_NT_FALLBACK = "kjv"
+
+
+def get_source(tradition: str, book: str) -> str:
+    """Return the data_loader source key to use for `book` within `tradition`."""
+    if tradition not in CANONICAL_SOURCES:
+        raise ValueError(f"Unknown tradition: {tradition!r}")
+
+    source = CANONICAL_SOURCES[tradition]
+    if tradition == "orthodox":
+        new_testament_books = set(load_canon_list("protestant")[-27:])
+        if book in new_testament_books:
+            return ORTHODOX_NT_FALLBACK
+    return source
+
+
+def load_book_text(tradition: str, book: str) -> str:
+    """Load `book`'s text using the canonical source for `tradition`."""
+    if book not in load_canon_list(tradition):
+        raise ValueError(f"{book!r} is not in the {tradition} canon")
+    return load_raw_text(get_source(tradition, book), book)
 
 
 def align_books(protestant_books: List[str], catholic_books: List[str], orthodox_books: List[str]) -> Dict[str, Dict[str, bool]]:
