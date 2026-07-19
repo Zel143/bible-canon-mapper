@@ -1,0 +1,166 @@
+# Mapping Canon Divergence: A Computational Comparison of Protestant, Catholic, and Orthodox Biblical Traditions
+
+**Status: first full draft.** This synthesizes the completed pipeline (`src/`, `notebooks/01`–`04`) and the research log in `docs/historical_notes.md` into thesis form. It is not a finished submission — see the "Limitations and Open Items" section (5.4) for what still needs work before this goes to a committee, most importantly the untuned topic model and one uncited secondary figure in the translation lineage sourcing.
+
+## Abstract
+
+Protestant, Catholic, and Orthodox Bibles disagree about which books belong in the Old Testament — 66, 73, and roughly 77–81 books respectively, depending on jurisdiction — and that disagreement is often discussed in exclusively historical or theological terms: council decisions, confessional statements, patristic testimony. This thesis treats the disagreement computationally instead, building a small open-source pipeline that (1) represents canon membership as a structured, queryable dataset rather than prose description, (2) traces which translations and source-language texts fed into which later Bibles, with each claim dated and cited, and (3) tests, using topic modeling, whether the deuterocanonical books that separate the Catholic and Orthodox canons from the Protestant one are thematically distinguishable from the protocanonical books all three traditions share. The topic model finds a real, non-trivial signal: deuterocanonical passages concentrate heavily in two topics — a narrative/political-history topic and a wisdom/moral-exhortation topic — that protocanonical passages are comparatively underrepresented in. The translation lineage graph, built from primary and secondary historical sources rather than assumption, corrects two claims that seemed intuitive but turn out to be unsupported or anachronistic once checked. The result is a small, reusable toolkit and dataset for canon comparison, plus a worked example of using standard NLP methods to make a historically contingent, doctrinally consequential fact — which books are Scripture — visible as data rather than only as doctrine.
+
+## 1. Introduction
+
+### 1.1 Research Question
+
+How do textual, source, and historical differences across the Protestant, Catholic, and Orthodox biblical canons manifest quantifiably — in content overlap, translation lineage, and thematic emphasis?
+
+**Sub-questions:**
+
+1. Which books are unique to each canon, and how can this be represented and visualized as a set-overlap or graph structure?
+2. Does topic modeling reveal a measurable difference in emphasis between the deuterocanonical books (Tobit, Judith, 1–2 Maccabees, Wisdom, Sirach, Baruch) and the protocanonical books all three traditions share?
+3. Can a translation lineage — which source texts and prior translations fed into which later ones — be constructed and *sourced*, rather than asserted, to show where each tradition's canon and text ultimately trace back to?
+
+### 1.2 Motivation
+
+The proximate motivation was a specific question: what does the Bible say about the intercession of saints and prayer for the dead, versus what Catholic tradition holds? Chasing that question honestly led to 2 Maccabees 12:38–46, which explicitly commends prayer and sacrifice for the dead — a passage that is canonical Scripture for Catholics and Orthodox and has no scriptural status for Protestants, because 2 Maccabees is a deuterocanonical book: affirmed as canon at the Councils of Hippo (393) and Carthage (397), reaffirmed dogmatically by the Council of Trent (1546) in response to the Reformation, but moved to a non-canonical "Apocrypha" section in Luther's 1534 Bible [4][5][6]. A doctrinal disagreement that looked, on its face, like a dispute over interpreting a shared text turned out to be partly a downstream consequence of a *prior* disagreement about which texts count as Scripture at all.
+
+That distinction — theological interpretation of shared Scripture versus disagreement rooted in different source texts — is not always obvious from the outside, and it is not always the case. As a contrast case, 2 Kings 13:20–21 (a dead man revived by contact with the bones of the prophet Elisha) involves the same broad pattern as 2 Maccabees — God acting through the remains of a deceased holy person — but is protocanonical, accepted without dispute in all three traditions [7]. The doctrinal split over relics and intercession is not a split over whether that pattern appears in universally accepted Scripture; it does. It is specifically about which later, contested books elaborate that pattern into practice. This pairing — one contested passage, one uncontested passage, on a related theme — became the seed case for the whole project: pick a passage, check its canon status across traditions, then check whether the *content* of contested and uncontested material is thematically distinguishable at scale, not just in this one pair.
+
+This project also gave a natural place to bring quantitative training to bear on a question usually settled by citing councils and creeds. As a computer science / data science project, it treats the canon-divergence question the way one would treat any other corpus-comparison problem: set overlap, topic modeling, and lineage-graph construction, applied to a domain (biblical canon history) that is not usually approached with these tools.
+
+### 1.3 Scope and Guardrails
+
+This project is **descriptive, not evaluative**: it documents what happened historically and why (Reformation-era debates over the Apocrypha, Jerome's *hebraica veritas* position, conciliar decisions) without adjudicating which canon is theologically correct. This is both a methodological commitment and what makes the project viable as a computer science / data science thesis rather than a theology thesis: the computational contribution (a reusable canon-comparison pipeline, a sourced lineage graph, a topic-modeling result) is the deliverable, and the historical material is treated as data to be modeled, not doctrine to be settled.
+
+## 2. Related Work
+
+Digital humanities projects on biblical corpora (e.g., STEP Bible, Blue Letter Bible's tools) provide the closest prior art for structured, queryable biblical text, though typically oriented toward lookup and cross-referencing rather than comparative set/topic analysis across canon traditions. Computational stylometry and authorship studies on biblical texts (a substantial existing literature, not surveyed in detail here) establish that standard NLP methods are applicable to this text domain. Canon-comparison scholarship proper is extensive but almost entirely historical and non-computational — councils, patristic testimony, confessional documents — and is the primary source material this project draws its lineage-graph and case-study citations from (see References and `docs/historical_notes.md`).
+
+**Open item:** this section needs specific citable digital-humanities and computational-stylometry papers, not just categories, before this thesis is submission-ready. Flagged rather than filled with placeholder citations, per the project's own standard of not asserting unsourced claims (see Section 5.4).
+
+## 3. Data and Methodology
+
+### 3.1 Canon Definitions
+
+Canon membership for each tradition is stored as structured data (`data/metadata/canon_lists.json`), not prose: the Protestant list (39 Old Testament + 27 New Testament books) is the base; the Catholic list adds 7 deuterocanonical books (Tobit, Judith, 1–2 Maccabees, Wisdom, Sirach, Baruch) plus textual additions to Esther and Daniel not counted as separate books, for 73 total; the Orthodox list adds 4 more (1 Esdras, 3 Maccabees, Prayer of Manasseh, Psalm 151) under one commonly cited Greek/Rahlfs-based baseline, for 77 total. `src/data_loader.load_canon_list(tradition)` loads these programmatically. The Orthodox list is explicitly documented as one baseline among several — Slavonic, Georgian, and Ethiopian jurisdictions include additional books (2 Esdras/4 Ezra, 4 Maccabees, Jubilees, 1 Enoch) not represented here; cross-checking against a specific jurisdiction remains open (Section 5.4).
+
+### 3.2 Source Texts
+
+Three public-domain source translations were fetched and parsed into one plain-text file per book (`src/fetch_kjv.py`, `src/fetch_douay_rheims.py`, `src/fetch_septuagint.py`):
+
+- **King James Version** (Project Gutenberg eBook #10) — Protestant, 66 books, Masoretic-Hebrew/Textus-Receptus-Greek based.
+- **Douay-Rheims**, Challoner revision (Project Gutenberg eBook #1581) — full 73-book Catholic canon in one consistent, Vulgate-based translation.
+- **Brenton's Septuagint** (eBible.org, USFM format) — the full 50-book Orthodox Old Testament (Brenton's translation has no New Testament) from one consistent Greek-based translation.
+
+Each fetcher required nontrivial text-processing work beyond a bulk download: matching Gutenberg section headings to canonical book names, handling archaic spelling variants (e.g. "Josue" for Joshua, "Machabees" for Maccabees in Douay-Rheims), splitting Psalm 151 out of a merged Psalms file, reassembling Daniel and Baruch from USFM files that split out their deuterocanonical portions (Susanna, Bel and the Dragon, and the Epistle of Jeremy respectively) as separate books rather than folding them in as the Vulgate tradition does. A real encoding bug was found and fixed during this work: `Path.write_text` on Windows was doubling the already-present `\r\n` line endings in the downloaded Gutenberg text into `\r\r\n`, which silently truncated wrapped verses during later cleaning — caught by actually inspecting output rather than assuming a successful download meant correct output.
+
+### 3.3 Canonical Source Selection per Tradition
+
+Because all three source texts are now available, a shared book (e.g. Genesis) exists in up to three different translations. Rather than arbitrarily picking one, or blending them, `src/align_corpus.py` assigns each tradition the source closest to its own textual basis (`CANONICAL_SOURCES`):
+
+| Tradition | Source | Rationale |
+|---|---|---|
+| Protestant | KJV | Masoretic-based, the only Protestant-specific source fetched |
+| Catholic | Douay-Rheims | Vulgate-based, one consistent translation across the full 73-book canon |
+| Orthodox | Septuagint (OT), KJV (NT) | The Septuagint is the Orthodox canon's actual textual basis (Greek, not Masoretic) for the Old Testament; Brenton's translation has no New Testament, so Orthodox NT books fall back to the KJV, whose Textus Receptus is closer to the Byzantine text Orthodox churches use liturgically than the Vulgate-derived Douay-Rheims New Testament |
+
+This choice matters specifically for Section 4.3: comparing protocanonical and deuterocanonical *content* only makes sense if both come from the same translation, so that any topic difference reflects the underlying text rather than translator word choice. The Catholic corpus (Douay-Rheims throughout) is used for exactly this reason.
+
+### 3.4 Corpus Cleaning
+
+`src/build_processed_corpus.py` reads each tradition's canonical-source text via `align_corpus.load_book_text` and writes cleaned plain text to `data/processed/<tradition>/<book>.txt` (216 files: 66 Protestant + 73 Catholic + 77 Orthodox), plus `data/processed/corpus_manifest.json` recording the canon overlap matrix and per-book source/word/character counts. Cleaning removes non-scriptural editorial matter (book introductions, "Chapter N" headings, per-chapter summary blurbs present in the Gutenberg editions) and strips `chapter:verse` markers — including markers embedded mid-paragraph in chapters formatted without per-verse line breaks (e.g. Matthew's genealogy) — down to continuous prose. The Septuagint source, already reduced to plain prose during USFM-to-text conversion at fetch time, only needs whitespace normalization here.
+
+### 3.5 Topic Modeling Methodology
+
+Books in the Catholic corpus are labeled **protocanonical** (also in the Protestant list; 66 books) or **deuterocanonical** (Catholic-only; 7 books), then split into passages of 150 words each (final partial passage per book dropped if under 30 words), yielding 5,953 passages (5,267 protocanonical, 686 deuterocanonical) across all 73 books. Passages, not whole books or chapters, are the unit of analysis: a single topic label per book would be too coarse to say anything about emphasis *within* a book, and chapter-level chunking was not available because chapter markers are deliberately removed during corpus cleaning (Section 3.4). A fixed 150-word window is a pragmatic substitute for chapter-level chunking, not a claim that it is the ideal passage boundary.
+
+Passages are vectorized as bag-of-words (`sklearn.feature_extraction.text.CountVectorizer`, English stopwords removed, `max_df=0.9`, `min_df=3`, vocabulary capped at 2,000 terms — 5,953 passages × 2,000 terms) and fit with Latent Dirichlet Allocation [15] (`sklearn.decomposition.LatentDirichletAllocation`, 12 topics, `random_state=42`, 20 iterations). Each passage is assigned its highest-probability (dominant) topic. LDA was chosen over an embedding-based method (e.g. BERTopic) specifically to avoid a multi-gigabyte dependency install (torch, sentence-transformers, UMAP, HDBSCAN) that was not justified for a first pass; the topic count (12) is a starting point, not a tuned value (Section 5.4).
+
+### 3.6 Translation Lineage Methodology
+
+`src/graph_builder.build_translation_lineage_graph()` constructs a directed acyclic graph of 14 texts and 20 lineage edges, each carrying an approximate date and a note — either a citation into the reference list below or a qualifier distinguishing the edge type (e.g. "standardization, not translation" for the Masoretes' codification of an existing Hebrew tradition; "reference, not primary source" for a text a translator consulted without translating from). Every edge was checked individually against historical sources rather than assumed; two edges present in an earlier, explicitly-flagged-as-placeholder version of this graph turned out to be wrong on inspection, not merely unsourced (Section 4.2, and the full research log in `docs/historical_notes.md`).
+
+## 4. Results
+
+### 4.1 Canon Overlap
+
+The presence/absence matrix (`src/align_corpus.align_books`, run on the three canon lists) confirms: 0 books unique to the Protestant list, 0 unique to the Catholic list, and exactly 4 unique to the Orthodox list (1 Esdras, 3 Maccabees, Prayer of Manasseh, Psalm 151) — consistent with the Protestant and Catholic lists both being proper subsets of the Orthodox list under this dataset's baseline Orthodox definition (Section 3.1). The bipartite overlap graph (`notebooks/01_canon_overlap.ipynb`, `outputs/figures/canon_overlap_graph.png`) has 3 tradition nodes, 77 book nodes, and 216 edges. As a spot-check against the case studies motivating this project (Section 1.2): 2 Maccabees resolves to Catholic/Orthodox-only (`{'protestant': False, 'catholic': True, 'orthodox': True}`), and 2 Kings resolves to present in all three — matching the documented canon status of both passages exactly.
+
+### 4.2 Translation Lineage
+
+Two corrections were made against the graph's earlier placeholder edges, documented in full in `docs/historical_notes.md` ("Sourcing the Translation Lineage Graph," 2026-07-19):
+
+1. **The Septuagint does not descend from the Masoretic Text.** The original placeholder graph had a `Hebrew Masoretic Text -> Septuagint` edge. This is anachronistic: the Septuagint was translated c. 250–132 BC [8], while the Masoretes codified and vocalized the Hebrew Masoretic Text roughly a millennium later (7th–10th century AD). Worse, Dead Sea Scroll evidence shows the Septuagint's Hebrew source text (Vorlage) differed in places from the Hebrew text-type that became the Masoretic tradition, rather than being an earlier draft of it [9]. The corrected graph gives both the Septuagint and the Masoretic Text a common ancestor — "Hebrew Source Texts (Second Temple era, textually plural)" — rather than deriving one from the other.
+
+2. **No documented dependency of the King James Version on Luther's Bible.** The placeholder graph asserted a direct `Luther's Bible (1534) -> King James Version (1611)` edge. No such textual dependency is documented; what the placeholder graph omitted entirely is the real, heavily-documented English-Bible lineage. The 1604 rules governing the KJV translators named the Bishops' Bible (1568) as base text, with Tyndale's, Coverdale's, Matthew's, the Great Bible's, and the Geneva Bible's wording to be preferred wherever it fit the original languages better [10]; Tyndale's wording is estimated at up to 80% of the KJV New Testament [11]. The corrected graph replaces the Luther edge with `Tyndale's Bible -> Great Bible -> Bishops' Bible -> King James Version`, plus direct edges from Tyndale's Bible and the Geneva Bible to the KJV per the translators' own stated instructions.
+
+A third edge, `Vulgate -> Luther's Bible`, was kept but re-annotated rather than removed: Luther's translation team's primary sources were Hebrew (via team member Caspar Cruciger [12]) and Erasmus's Greek New Testament [13], with the Vulgate serving as a consulted reference (brought by team member Johannes Bugenhagen [12]) rather than a primary source text — a real distinction the earlier version of the graph did not make. The Vulgate's own upstream sourcing was similarly split into its three actual components rather than one generic "Vulgate" predecessor: the Masoretic Hebrew tradition for the protocanonical Old Testament (Jerome's *hebraica veritas* translations, 382–405 AD), the Old Latin (Vetus Latina) for most deuterocanonical books Jerome retained rather than retranslated (Wisdom, Sirach, Baruch, 1–2 Maccabees) [14], and Greek New Testament manuscripts for Jerome's revision of the Old Latin Gospels.
+
+The resulting graph (`notebooks/02_translation_lineage.ipynb`, `outputs/figures/translation_lineage_graph.png`) is a valid directed acyclic graph — verified programmatically (`networkx.is_directed_acyclic_graph`) — of 14 texts and 20 dated, cited edges.
+
+### 4.3 Topic Modeling: Protocanonical vs. Deuterocanonical
+
+Fitting LDA on the 5,953-passage Catholic corpus produces 12 topics with clearly interpretable top-word lists — e.g. Topic 7 ("king, son, lord, israel, juda, house, jerusalem, years, david, solomon") reads as royal/dynastic narrative; Topic 3 ("shall, offer, altar, sacrifice, thereof, cubits, seven, day, lord, sin") reads as cultic/sacrificial law; Topic 11 ("thou, thy, thee, shalt, lord, hast, shall, god, art, wilt") reads as archaic second-person direct address (exhortation/covenant language).
+
+Comparing topic distribution *within* each category (i.e. what fraction of each category's passages land in each topic, correcting for protocanonical passages outnumbering deuterocanonical roughly 8-to-1) shows two topics where deuterocanonical passages are substantially overrepresented relative to protocanonical ones:
+
+| Topic | Top words | Deuterocanonical share | Protocanonical share |
+|---|---|---|---|
+| 0 | jews, came, great, men, city, went, people, king, jerusalem, day | 26.1% | 3.1% |
+| 8 | god, hath, things, man, shall, lord, unto, good, let, heart | 40.2% | 16.0% |
+
+Topic 0 reads as historical/political narrative centered on Jerusalem and named political actors — consistent with 1–2 Maccabees' subject matter (Hellenistic-era wars and Jewish political history). Topic 8 reads as general moral/wisdom exhortation — consistent with Wisdom and Sirach's genre. Conversely, protocanonical passages are overrepresented (relative to their already-larger base rate) in Topic 10 ("shall, lord, hath, saith, come, earth, people, land, man, god," 21.9% vs. 6.6%) and Topic 1 ("said, shall, jesus, man, saying, come, say, came, god, behold," 10.2% vs. 0.4%) — the latter almost certainly picking up Gospel narrative material (the word "jesus" is a strong marker), which has no deuterocanonical counterpart at all since the New Testament is identical across all three canons.
+
+As a direct sanity check against the case-study pair from Section 1.2: 2 Maccabees' passages are dominated by Topic 0 (71 of 108 passages, 65.7%) with a secondary concentration in Topic 8 (21 passages, 19.4%). 2 Kings' passages are dominated by Topic 7 — the royal/dynastic narrative topic (76 of 156 passages, 48.7%) — with a secondary concentration in Topic 5 ("said, king, lord, hath, god, man, father, answered, let, thee," 39 passages, 25.0%), a topic reading as court/dialogue narrative. Both books are historical narrative in genre, and both get narrative-flavored dominant topics, but *different* narrative topics: 2 Kings clusters with royal/dynastic vocabulary, 2 Maccabees with a topic more focused on collective political actors ("jews," "people," "city") than named kings. This is a real, if modest, distinction — consistent with 2 Maccabees' actual content (a Hellenistic-era account of a people's political and religious resistance) differing in emphasis from 2 Kings' court-centered dynastic history, even though both are canonically "historical narrative" and both are protocanonical-adjacent in genre.
+
+## 5. Discussion
+
+### 5.1 What the Topic Result Does and Doesn't Show
+
+The topic distribution difference (Section 4.3) is a genuine, non-trivial finding: deuterocanonical passages are not topically indistinguishable from protocanonical ones under this model. But it should not be over-read. Two of the seven deuterocanonical books (1–2 Maccabees) are historical narrative and plausibly drive most of the Topic 0 concentration; Wisdom and Sirach are wisdom literature and plausibly drive the Topic 8 concentration. This is consistent with a simpler explanation than "deuterocanonical books are thematically distinct as a category": deuterocanonical books happen to be concentrated in genres (Hellenistic historical narrative, wisdom literature) that are comparatively underrepresented among the 39 protocanonical books, so a genre effect could produce this result without any claim about deuterocanonical *content* being theologically or thematically unusual relative to protocanonical books of the same genre. Testing that distinction — deuterocanonical-vs-protocanonical within matched genre — is the natural next analysis and is not yet done (Section 5.4).
+
+### 5.2 The Translation Lineage Corrections, Read Together
+
+The two corrected edges in Section 4.2 share a pattern worth naming directly: both were plausible-sounding claims that happened to be wrong once checked against sources, not merely unsourced guesses that turned out to be roughly right. The Septuagint-from-Masoretic-Text edge is wrong because it assumes "the Hebrew Bible" was a single fixed text that different traditions each took a copy of at different points in history, when in fact multiple Hebrew textual traditions coexisted well into the Second Temple period, and which one a given translator worked from was a real, consequential choice — the same choice Jerome explicitly defended in his *hebraica veritas* argument against contemporaries who trusted the Septuagint instead. The Luther-to-KJV edge is wrong because it substitutes the most *famous* prior Reformation translation for the actual documented one (the English Tyndale/Bishops'-Bible tradition), which is a natural error to make without checking primary sources. Both errors are the kind that intuition produces and citation-checking catches — which is the methodological point of doing the sourcing work at all (Section 3.6), not a criticism specific to this project's earlier draft.
+
+### 5.3 Descriptive Framing, Revisited
+
+Section 1.3 commits this project to descriptive rather than evaluative claims. The results in Section 4 hold to that: nothing here argues that the Protestant, Catholic, or Orthodox canon is theologically correct, or that deuterocanonical books are more or less inspired, authoritative, or valuable than protocanonical ones. What the topic-modeling result shows is that *content* differs measurably between the two categories — which is a precondition for, but does not settle, the theological question of *why* the traditions draw the canon boundary where they do. The translation lineage graph is similarly descriptive: it shows what fed into what, not which resulting text is more faithful to an original.
+
+### 5.4 Limitations and Open Items
+
+Being explicit about what is not yet done, rather than presenting a more finished picture than the pipeline actually supports:
+
+- **The topic count (12) is untuned.** No stability check across different `n_components` or `random_state` values has been run; the specific topics reported in Section 4.3 could shift with different hyperparameters. This should be checked before treating the specific topic assignments as a stable result rather than an illustrative one.
+- **LDA vs. embedding-based topic modeling.** Bag-of-words LDA was chosen for practical reasons (Section 3.5), not because it is expected to be the best-performing method. An embedding-based approach (e.g. BERTopic) might separate deuterocanonical wisdom literature from deuterocanonical narrative more cleanly than this single-pass LDA does, since it was not run.
+- **The genre-confound in Section 5.1 is not yet tested.** The topic result is consistent with both a "deuterocanonical content is thematically distinct" explanation and a "deuterocanonical books happen to cluster in underrepresented genres" explanation; this thesis has not distinguished between them.
+- **One secondary citation needs a primary source.** Reference [11] (the ~80% Tyndale/KJV New Testament wording estimate) is a widely repeated figure in KJV translation-history writing, cited here from secondary sources rather than traced to one specific peer-reviewed count. Fine for a working notebook; should be pinned down before this claim is relied on in a final submission.
+- **The Orthodox canon list is one baseline, not a jurisdictional standard.** Section 3.1 notes this; the 77-book list used throughout does not represent Slavonic, Georgian, or Ethiopian Orthodox canons, which include additional books not modeled here.
+- **Related Work (Section 2) needs specific citations**, not category descriptions, before this is submission-ready.
+- **No statistical significance testing** was applied to the topic-distribution differences in Section 4.3 (e.g. no chi-square test on the topic×category contingency table). The reported percentage differences are descriptive, not tested against a null hypothesis.
+
+## 6. Conclusion and Future Work
+
+This project set out to test whether standard computational text-analysis methods — set comparison, graph construction, topic modeling — could make canon divergence across the Protestant, Catholic, and Orthodox biblical traditions visible as data, using the same tools applicable to any other corpus-comparison problem, without adjudicating which tradition's canon is theologically correct. The canon overlap analysis (Section 4.1) reproduces the documented canon differences exactly, including the specific case-study pair (2 Maccabees, 2 Kings) that motivated the project. The translation lineage graph (Section 4.2) demonstrates that even a small, deliberately scoped historical-lineage claim benefits materially from source-checking — two of eight original edges were substantively wrong, not merely unsourced. The topic-modeling result (Section 4.3) finds a real, interpretable, if genre-confounded, thematic difference between deuterocanonical and protocanonical passages within a single consistent translation.
+
+Immediate next steps, in rough priority order: (1) test the genre-confound hypothesis in Section 5.1 directly, by comparing deuterocanonical and protocanonical books within matched genre categories rather than as undifferentiated blocks; (2) run a topic-count stability check and, resources permitting, a BERTopic comparison; (3) pin down the one open citation (Section 5.4); (4) extend the corpus construction and topic-modeling pipeline to the Orthodox-only books (1 Esdras, 3 Maccabees, Prayer of Manasseh, Psalm 151), which was deliberately out of scope here because it would mix Septuagint- and KJV-sourced text and reintroduce the translation-artifact risk Section 3.3 was designed to avoid for the Catholic-corpus analysis.
+
+## References
+
+[1] `data/metadata/canon_lists.json`, `data/metadata/canon_lists.md` — this project's structured canon definitions.
+[2] `src/align_corpus.py`, `src/graph_builder.py`, `src/build_processed_corpus.py` — this project's analysis pipeline.
+[3] `docs/historical_notes.md` — this project's cited research journal; primary source for all historical claims cross-referenced by number below.
+[4] Council of Hippo, Canon 36 (393 A.D.), confirmed by the Third Council of Carthage (397 A.D.).
+[5] Council of Trent, "Decree Concerning the Canonical Scriptures," Fourth Session, Apr. 8, 1546.
+[6] M. Luther, "Preface to the Apocrypha," in *Biblia: das ist, die gantze Heilige Schrifft Deudsch*, Wittenberg, 1534.
+[7] 2 Kings 13:20–21, King James Version; 2 Maccabees 12:38–46, New American Bible Revised Edition.
+[8] Dating of the Septuagint's translation (Pentateuch c. 250 BC per the *Letter of Aristeas* tradition; remaining books completed by c. 132 BC per the prologue to Sirach) — see the Septuagint entry in standard biblical-studies reference works.
+[9] E. Tov's classification of Dead Sea Scroll biblical manuscripts identifies a distinct pre-Septuagint Hebrew text-type (e.g. 4QJer-b, 4QJer-d, 4QSam-a) alongside proto-Masoretic manuscripts, confirming textual plurality in the Hebrew tradition the Septuagint translators drew from — summarized in scroll-classification literature following Tov's *Textual Criticism of the Hebrew Bible*.
+[10] "Rules to Be Observed in the Translation of the Bible" (1604), the fifteen instructions issued to the King James translators.
+[11] Widely-cited textual comparison of KJV New Testament wording against Tyndale's translation, commonly given as ~80–84% overlap in KJV translation-history scholarship — secondary-source figure, not yet traced to a single primary count (see Section 5.4).
+[12] Historical accounts of the 1534 Luther Bible's collaborative translation team (Melanchthon, Cruciger, Bugenhagen, Jonas, Rörer et al.) and each member's role.
+[13] Erasmus, *Novum Instrumentum omne* (1516), 2nd ed. 1519 — the Greek New Testament edition Luther's translation team used as a primary New Testament source.
+[14] Jerome's prefaces to his Vulgate translations (e.g. the preface to Judith) and standard Vulgate reference histories, on which books he retranslated from Hebrew/Aramaic versus retained from the Vetus Latina.
+[15] D. M. Blei, A. Y. Ng, and M. I. Jordan, "Latent Dirichlet Allocation," *Journal of Machine Learning Research*, vol. 3, pp. 993–1022, 2003.
+
+## Appendix: Reproducibility
+
+All results in Section 4 are reproducible from a clean checkout: `python src/fetch_kjv.py && python src/fetch_douay_rheims.py && python src/fetch_septuagint.py` populates `data/raw/`; `python src/build_processed_corpus.py` populates `data/processed/`; `jupyter nbconvert --to notebook --execute notebooks/0{1,2,3,4}_*.ipynb` regenerates every figure cited above. `data/raw/` and `data/processed/` are gitignored by design (fully regenerable, kept out of version control to keep the repository light) — see `context/PROJECT_MAP.md` for the full pipeline map (personal navigation notes, not part of this thesis).
