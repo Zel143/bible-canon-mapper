@@ -12,39 +12,26 @@ from typing import Dict, List
 sys.path.append(str(Path(__file__).parent))
 from data_loader import load_canon_list, load_raw_text  # noqa: E402
 
-# Canonical text source per tradition, picked so each tradition's shared
-# books are read from the translation closest to that tradition's own
-# textual basis, now that KJV/Douay-Rheims/Septuagint are all fetched and
-# a given book (e.g. Genesis) may exist in more than one source:
-#   - protestant: KJV — Masoretic-based OT, the only Protestant-specific
-#     source fetched.
-#   - catholic: Douay-Rheims — Vulgate-based, one consistent translation
-#     covering the full 73-book Catholic canon.
-#   - orthodox: Septuagint (Brenton) — the Old Testament, Greek-based, is
-#     the Orthodox canon's actual textual basis (Septuagint > Masoretic
-#     for this tradition specifically). Brenton's translation has no New
-#     Testament, so Orthodox NT books fall back to KJV, whose Textus
-#     Receptus is closer to the Byzantine text Orthodox churches use
-#     liturgically than the Vulgate-derived Douay-Rheims NT.
+# Text-source scope (changed 2026-07-22): the corpus is restricted to the
+# Protestant Bible only — the 66-book Protestant canon, read from the KJV.
+# The Douay-Rheims and Septuagint fetchers/raw data still exist (and the
+# old per-tradition source mapping is in git history) but are no longer
+# part of the active text pipeline. Canon *lists* for catholic/orthodox
+# remain available via data_loader.load_canon_list for metadata-level
+# comparison (e.g. the canon overlap matrix), which uses no text.
 CANONICAL_SOURCES = {
     "protestant": "kjv",
-    "catholic": "douay_rheims",
-    "orthodox": "septuagint",
 }
-ORTHODOX_NT_FALLBACK = "kjv"
 
 
 def get_source(tradition: str, book: str) -> str:
     """Return the data_loader source key to use for `book` within `tradition`."""
     if tradition not in CANONICAL_SOURCES:
-        raise ValueError(f"Unknown tradition: {tradition!r}")
-
-    source = CANONICAL_SOURCES[tradition]
-    if tradition == "orthodox":
-        new_testament_books = set(load_canon_list("protestant")[-27:])
-        if book in new_testament_books:
-            return ORTHODOX_NT_FALLBACK
-    return source
+        raise ValueError(
+            f"No text source for tradition {tradition!r}: the corpus is "
+            "restricted to the Protestant canon (KJV) as of 2026-07-22"
+        )
+    return CANONICAL_SOURCES[tradition]
 
 
 def load_book_text(tradition: str, book: str) -> str:

@@ -1,25 +1,22 @@
 """
 build_processed_corpus.py
 
-Builds the cleaned, aligned corpus in data/processed/ from the raw
-per-source texts fetched by fetch_kjv.py, fetch_douay_rheims.py, and
-fetch_septuagint.py, using align_corpus.load_book_text to pick each
-tradition's canonical source (see align_corpus.CANONICAL_SOURCES).
+Builds the cleaned corpus in data/processed/ from the raw KJV texts
+fetched by fetch_kjv.py, via align_corpus.load_book_text. As of
+2026-07-22 the text pipeline is restricted to the Protestant Bible only
+(66-book Protestant canon, KJV text) — see align_corpus.CANONICAL_SOURCES.
 
 Writes:
-  data/processed/<tradition>/<book>.txt  -- cleaned text, one file per
-                                             tradition/book combination
+  data/processed/protestant/<book>.txt   -- cleaned text, one file per book
   data/processed/corpus_manifest.json    -- canon overlap matrix (from
-                                             align_corpus.align_books)
+                                             align_corpus.align_books;
+                                             metadata-only, uses no text)
                                              plus per-book source/length
                                              metadata
 
 Cleaning removes non-scriptural editorial matter (book introductions,
 "<Book> Chapter N" headings, per-chapter summary blurbs) and verse-number
-prefixes from the KJV/Douay-Rheims sources, which both come from
-Gutenberg editions that include this front matter inline. The Septuagint
-source (src/fetch_septuagint.py) already strips USFM markup down to plain
-prose during fetching, so it only needs whitespace normalization here.
+prefixes, which the Gutenberg KJV edition includes inline.
 
 Usage:
     python src/build_processed_corpus.py
@@ -35,7 +32,7 @@ from align_corpus import align_books, get_source, load_book_text  # noqa: E402
 from data_loader import load_canon_list  # noqa: E402
 
 PROCESSED_DIR = Path(__file__).parent.parent / "data" / "processed"
-TRADITIONS = ("protestant", "catholic", "orthodox")
+TRADITIONS = ("protestant",)
 VERSE_PREFIX_RE = re.compile(r"^\d+:\d+\.?\s*")
 INLINE_VERSE_RE = re.compile(r"\s\d+:\d+\.?(?=\s)")
 

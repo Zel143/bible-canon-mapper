@@ -11,7 +11,7 @@ How do textual, source, and historical differences across biblical canons manife
 
 ## 2. Sub-Questions
 1. Which books/passages are unique to each canon, and how can this be visualized as a set-overlap or graph structure?
-2. Does topic modeling reveal measurable differences in theological emphasis between deuterocanonical and protocanonical books?
+2. **(Revised 2026-07-22 — see `docs/thesis.md`'s scope-change note.)** The project's text pipeline is now restricted to the Protestant Bible (KJV) as sole source, which removes the deuterocanonical books from the active corpus. Original question: does topic modeling reveal measurable differences in theological emphasis between deuterocanonical and protocanonical books? Current question: within the Protestant/KJV corpus, does topic modeling reveal measurable differences between Old and New Testament passages? The original comparison is preserved in git history and remains a candidate for reinstatement — see `docs/thesis.md` §6.
 3. Can a translation lineage graph (Septuagint → Vulgate → Luther's Bible → KJV → modern) be constructed to show where canon decisions originated?
 
 ## 3. Background / Motivation
@@ -30,16 +30,15 @@ See `docs/historical_notes.md` for the case study that prompted this (the saints
 - Prior canon-comparison scholarship (historical, non-computational) to cite as grounding
 
 ## 5. Data Sources
-- KJV, Douay-Rheims, Orthodox Study Bible (public domain excerpts)
-- Septuagint (CCAT), Vulgate (public domain digitizations)
-- Historical records: Council of Trent, Council of Carthage/Hippo, Luther's preface to the Apocrypha
+- KJV (active text source as of 2026-07-22 — see `docs/thesis.md` scope-change note); Douay-Rheims and Brenton's Septuagint were also fetched and used for an earlier version of the topic-modeling comparison, and remain in the repository but are not part of the active pipeline
+- Historical records: Council of Trent, Council of Carthage/Hippo, Luther's preface to the Apocrypha (used for canon-list metadata and translation lineage, unaffected by the text-source scope change)
 
 ## 6. Methodology
-- Corpus collection and cleaning
-- Canon set-comparison (overlap graph via NetworkX)
-- Topic modeling (BERTopic/LDA) — deuterocanonical vs. protocanonical
-- Translation lineage graph construction
-- Visualization (interactive, via Plotly/D3)
+- Corpus collection and cleaning (KJV only, as of 2026-07-22)
+- Canon set-comparison (overlap graph via NetworkX) — still covers all three traditions, built from canon-list metadata rather than comparative text
+- Topic modeling (LDA) — Old Testament vs. New Testament within the KJV corpus (revised scope; originally deuterocanonical vs. protocanonical, see `docs/thesis.md` §4.3–4.4)
+- Translation lineage graph construction — still covers all three traditions
+- Visualization (currently static matplotlib panels; interactive Plotly/D3 remains a planned upgrade, not yet built)
 
 ## 7. Expected Contribution
 A reusable open-source toolkit + dataset for canon comparison, plus a historically grounded account of *why* divergence occurred — useful for both CS/DS methodology demonstration and interdisciplinary theology/digital-humanities audiences.
